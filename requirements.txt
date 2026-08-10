@@ -1,0 +1,13 @@
+# 대전 국세청 AI 심화 과정 day01~day04 실습 공통 환경
+# Python 3.11 (권장 3.11.9) / Windows / CPU-only
+#   uv venv --python 3.11
+#   uv pip install -r requirements.txt
+
+# day01 / day02 — 딥러닝 · CNN · RNN/LSTM · Attention · Transformer
+tensorflow>=2.16
+keras>=3.0
+numpy>=1.26
+pandas
+matplotlib
+scikit-learn
+

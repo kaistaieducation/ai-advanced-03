@@ -1,3 +1,33 @@
-# PowerPoint files
-*.pptx
+# 교안 원본(*.pptx)은 저장소에 포함합니다.
+# PowerPoint가 편집 중 만드는 임시 잠금 파일만 제외합니다.
 ~$*.pptx
+~$*.ppt
+~$*.docx
+~$*.xlsx
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# 가상환경
+.venv/
+.venv-*/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# 테스트 · 실행 산출물
+.test_artifacts/
+
+# 백업 파일
+*.bak
+
+# OS · 편집기
+Thumbs.db
+desktop.ini
+.DS_Store
+.idea/

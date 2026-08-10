@@ -1,0 +1,58 @@
+1. Microsoft Visual C++ Redistributable 설치
+
+Microsoft 공식 설치 파일인 Visual C++ 2015–2022 Redistributable (x64) 를 설치하세요.
+
+공식 다운로드:
+
+https://aka.ms/vs/17/release/vc_redist.x64.exe
+
+다운로드한 다음:
+
+vc_redist.x64.exe → Install(설치)
+
+이미 설치되어 있다고 나오면:
+
+Repair(복구) → 완료
+
+를 선택하세요.
+
+msvcp140.dll 파일만 인터넷에서 따로 다운로드해서 System32에 복사하는 방법은 권장하지 않습니다.
+
+2. PowerShell을 완전히 닫았다가 다시 실행
+
+설치가 끝났으면 기존 VS Code와 PowerShell 창을 모두 닫고 다시 실행하세요.
+
+그리고 프로젝트로 이동합니다.
+
+cd C:\work\ai-advanced-03
+
+uv 가상환경을 사용 중이라면:
+
+.\.venv\Scripts\activate
+3. TensorFlow가 실행되는지 확인
+python -c "import tensorflow as tf; print(tf.__version__)"
+
+정상이라면 예를 들어 다음처럼 TensorFlow 버전이 출력됩니다.
+
+2.x.x
+4. 그래도 오류가 나면 DLL 존재 여부 확인
+where.exe msvcp140.dll
+
+정상 설치되었다면 보통 다음과 비슷한 위치가 나타납니다.
+
+C:\Windows\System32\msvcp140.dll
+
+그리고 다음도 확인하세요.
+
+where.exe vcruntime140.dll
+where.exe vcruntime140_1.dll
+5. Python이 64비트인지 확인
+python -c "import struct; print(struct.calcsize('P') * 8)"
+
+현재 교육환경이라면 결과가 다음이어야 합니다.
+
+64
+
+즉, 권장 조치 순서는 아주 간단하게 잡으면 됩니다.
+
+Python 3.11.9 설치 → Visual C++ 2015–2022 x64 설치 → uv 가상환경 생성 → requirements.txt 설치 → TensorFlow 테스트

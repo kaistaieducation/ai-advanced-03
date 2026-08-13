@@ -1,0 +1,808 @@
+{
+  "name": "AI meeting assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {}
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "google-drive-folder-id-recorded",
+          "mode": "list",
+          "cachedResultName": "Recorded",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/google-drive-folder-id-removed"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        384,
+        -960
+      ],
+      "id": "16cda9d6-7e9e-4cc5-bbb8-751998654df6",
+      "name": "Google Drive Trigger1",
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        560,
+        -960
+      ],
+      "id": "d9d88e30-3bb1-4d8d-ba30-2c932d61a432",
+      "name": "Google Drive1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        -784
+      ],
+      "id": "668bcdf6-d1db-418d-9410-54a5b36a08e5",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ $now.setZone('Asia/Seoul').toFormat('yyyy-MM-dd') }}.srt",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "google-drive-folder-id-input",
+          "mode": "list",
+          "cachedResultName": "회의록 input",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/google-drive-folder-id-removed"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1648,
+        -960
+      ],
+      "id": "8896ecee-2e10-467e-b61a-bd08652c81e0",
+      "name": "Upload file2",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1856,
+        -784
+      ],
+      "id": "522721b6-9073-4eb8-b71b-e7c3049408c1",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "output",
+        "options": {
+          "fileName": "={{ $now.setZone('Asia/Seoul').toFormat('yyyy-MM-dd') }}_회의록.md"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2176,
+        -896
+      ],
+      "id": "298d6b9e-7ba2-4f40-98be-f145ce7f07b7",
+      "name": "Convert to File3"
+    },
+    {
+      "parameters": {
+        "name": "={{ $now.toFormat('yyyy-MM-dd') }}_회의록",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "google-drive-folder-id-output",
+          "mode": "list",
+          "cachedResultName": "회의록 output",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/google-drive-folder-id-removed"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2304,
+        -896
+      ],
+      "id": "a7b605d4-8615-4f39-8d3a-abe9248f6e74",
+      "name": "Upload file3",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### 음성 파일 업로드\n1. 휴대폰 녹음 기능으로 녹음 후 드라이브에 수동 업로드\n2. 옵시디언에서 녹음 기능 활용하여 드라이브에 자동 업로드",
+        "height": 256,
+        "width": 384
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        320,
+        -1056
+      ],
+      "typeVersion": 1,
+      "id": "3fd95215-0721-4337-885f-2cad579d76d6",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "### AI Agent1\n앞서 OpenAI Whisper가 음성 녹음 파일을 자막으로 변경하면, 그것을 Gemini가 맞춤법, 흐름 등 자연스럽게 문맥 교정",
+        "height": 400,
+        "width": 304,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1168,
+        -1056
+      ],
+      "typeVersion": 1,
+      "id": "0355b132-c895-4d3e-b7f8-8f92034ddc17",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "### AI Agent2\n전반적인 회의 내용 파악 및 요약\n하이라이트, 타임스템프, 3줄 요약 등",
+        "height": 400,
+        "width": 288,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1808,
+        -1056
+      ],
+      "typeVersion": 1,
+      "id": "49d06e30-0000-4cd4-b0fc-cc95a7794eb6",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "### 음성 파일 용량 압축\nopenai whisper는 25mb이상 처리 불가",
+        "height": 256,
+        "width": 160,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        752,
+        -1056
+      ],
+      "typeVersion": 1,
+      "id": "b8bd6ee9-0b8d-4f81-ad85-e57ab6b16cfa",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=당신은 전문적인 교정 및 편집 에디터입니다.\n아래 제공되는 [음성 인식 텍스트]를 바탕으로 다음의 [작업 지침]을 엄격히 준수하여 텍스트를 다듬어 주세요.\n\n[작업 지침]\n1. **교정 및 윤문**: 맞춤법, 띄어쓰기, 문법 오류를 수정하고 문장의 흐름이 자연스럽게 이어지도록 매끄럽게 다듬으세요.\n2. **길이 유지 (요약 금지)**: 내용을 요약하거나 축약하지 마세요. 원문의 정보량과 길이를 그대로 유지해야 합니다.\n3. **누락 방지**: 텍스트의 시작부터 끝까지, 어떤 문장도 누락되지 않도록 꼼꼼하게 검토하여 변환하세요.\n4. **문맥 수정**: 음성 인식(STT) 과정에서 잘못 인식된 것으로 보이는 단어나 문맥상 어색한 표현은 상황에 가장 적합한 단어로 수정하세요.\n5. **출력 형식**: 교정이 완료된 텍스트만 출력하세요. (인사말이나 부가 설명 생략)\n\n[음성 인식 텍스트]\n{{ $json.text }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1200,
+        -960
+      ],
+      "id": "53767455-0259-496d-938a-c6f82124c9fb",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('AI Agent1').item.json.output }}",
+        "options": {
+          "systemMessage": "=당신은 비즈니스 문서 정리에 특화된 '수석 서기'입니다.\n제공된 회의 스크립트(타임코드 포함)를 분석하여, **바쁜 팀원들이 1분 만에 파악할 수 있는 가독성 최상의 회의록**을 작성하세요.\n\n[참여자 및 주요 용어 사전]\n- 팀원: 참여자 A, 참여자 B, 참여자 C, 참여자 D, 참여자 E\n- 기술용어: n8n, Obsidian, Webhook\n\n[작업 지침 - 엄격 준수]\n\n1. **📝 3줄 요약 (Executive Summary)**\n   - 회의의 핵심 목적과 결론을 가장 중요한 순서대로 딱 3문장으로 요약하세요.\n\n2. **🗣️ 발언자별 핵심 발언 (Who Said What)**\n   - **담당 업무는 제외하고**, 각 참여자가 회의에서 논의한 **주요 의견만** 간결하게 요약하세요.\n   - **형식:**\n     - **이름**: 주요 발언 요약\n\n3. **✅ 담당자별 액션 아이템 (Action Items by Assignee)**\n   - 회의에서 도출된 할 일을 담당자별로 그룹화하여 정리하세요.\n   - 공동 작업이거나 담당자가 불명확할 경우 '공통' 또는 '팀 전체'로 분류하세요.\n   - **형식:**\n     - **담당자명**\n       - [ ] 할 일 내용 (⚠️ 마감: 문맥상 날짜가 유추될 경우 기입하고, 그렇지 않다면 빈칸 유지, 보통 마감일은 {{ $now.toFormat('yyyy-MM-dd') }} 보다 이후 날짜가 맞으므로 {{ $now.toFormat('yyyy-MM-dd') }} 이후 날짜라면 마감일 생략.)\n       - [ ] 할 일 내용\n   - **[위험 고지]** 액션 아이템의 마감 기한은 **문맥상 명확하게 언급되었을 때만 기입**하며, 유추된 마감일에는 **더블 체크가 필요함**을 상기하세요.\n\n4. **⏰ 타임라인 챕터 (Chapter Timeline)**\n   - 주요 주제가 전환되는 시점 위주로 굵직하게 요약하세요.\n   - **시간 표기:** 반드시 **시간:분 (`hh:mm`) 형식**을 준수하며, **초는 드롭**하세요. (예: 0시간 5분 -> 00:05, 0시간 30분 -> 00:30)\n   - **형식:** Markdown 표(Table) 사용\n   | 시간 | 주제 | 핵심 내용 |\n   | :--- | :--- | :--- |\n   | 00:00 | 오프닝 | 금주 일정 및 근황 공유 |\n   | 00:15 | 비용 가이드 | OpenAI API 키 분리 논의 |\n\n[출력 스타일]\n- 서론/결론 없이 본문만 출력.\n- Obsidian 호환 Markdown 문법 사용 (볼드체, 표, 체크박스 등).\n\n[입력 데이터]\n{{ $('AI Agent1').item.json.output }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1840,
+        -960
+      ],
+      "id": "34ef5925-d046-4059-9629-f117003029c5",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2208,
+        -560
+      ],
+      "id": "e538ae63-481e-4ccd-8a02-c1911a36d170",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "=당신은 내용에 일절 손댈 수 없는 '불변 포맷 변환기'입니다.\n귀하의 유일한 임무는 입력된 원본 텍스트의 내용을 한 글자도 바꾸지 않고 오직 형식(Format)만 슬랙에 최적화하는 것입니다.\n\n[변환 규칙 - 엄격 준수]\n1. **🔥 내용 불변의 원칙 (Non-Negotiable)**: 원본 텍스트의 단어나 문장 구조, 내용을 절대로 변경하거나 요약, 삭제, 추가하지 마세요. 오직 형식(마크다운 → 슬랙 mrkdwn) 변환만 허용됩니다.\n2. **상단 날짜**: 최상단에 `📅 {{ $now.setZone('Asia/Seoul').toFormat('yyyy-MM-dd') }} 회의 요약`을 **굵게(*제목*)** 작성하고 빈 줄을 추가하세요.\n\n3. **🔥 행 시작 기호 완벽 제거 (Aggressive Strip)**:\n   - 모든 행(Line)의 맨 앞에서 발견되는 `*`, `•`, `-` 기호 및 들여쓰기 공백을 완전히 제거하세요. 텍스트를 왼쪽으로 정렬하세요.\n\n4. **체크박스/리스트 정리 (New)**:\n   - **체크박스 제거**: 내용 내에 남아있는 **`[ ]`** 또는 **`[x]`** 같은 마크다운 체크박스 기호는 **모두 삭제**하세요. (슬랙에 불필요한 문자 제거)\n   - **액션 아이템 재구성**: 모든 액션 아이템은 **글머리 기호(•)**를 사용하여 슬랙 리스트로 만드세요.\n\n5. **헤더 변환**: `#`, `##` 헤더는 제거하고, 해당 줄을 **굵게(*제목*)** 처리하세요.\n\n6. **구조적 요소 불렛 금지 (New)**:\n   - 타임라인(`[hh:mm]`)이나 담당 업무 화살표 (`→`)가 시작되는 줄에는 **글머리 기호(`•`)를 절대 붙이지 마세요.** (화살표가 리스트 기호 역할을 대체함)\n\n7. **구분감**: 각 섹션 사이에는 빈 줄을 하나씩 넣어주세요.\n\n[입력 데이터]\n{{ $('AI Agent2').item.json.output }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        2176,
+        -704
+      ],
+      "id": "853da659-81aa-40e4-9976-498598515d70",
+      "name": "AI Agent3"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "slack-channel-id-removed",
+          "mode": "list",
+          "cachedResultName": "4_챗봇"
+        },
+        "messageType": "attachment",
+        "attachments": [
+          {
+            "text": "={{ $json.output }}"
+          }
+        ],
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        2496,
+        -656
+      ],
+      "id": "bd7175dd-699b-44d4-8b4e-823a0aa19d9c",
+      "name": "Send a message (After7)",
+      "webhookId": "webhook-id-removed",
+      "credentials": {
+        "slackApi": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "outputFormat": "mp3",
+        "additionalOptions": "={\n  \"audio_bitrate\": 32\n}"
+      },
+      "type": "@cloudconvert/n8n-nodes-cloudconvert.cloudConvert",
+      "typeVersion": 1,
+      "position": [
+        784,
+        -960
+      ],
+      "id": "d275a00e-ea18-4317-a58c-0b32488d9834",
+      "name": "CloudConvert",
+      "credentials": {
+        "cloudConvertOAuth2Api": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        976,
+        -960
+      ],
+      "id": "774f39e4-b5fb-4a3d-8a68-992ac8978318",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "openAiApi": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "output",
+        "options": {
+          "fileName": "={{ $('Google Drive1').item.json.name.split('.')[0] }}.txt"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        -960
+      ],
+      "id": "ef90a812-5d6e-41ab-b505-2c2a0cf0d386",
+      "name": "Convert to File1"
+    },
+    {
+      "parameters": {
+        "content": "### 파일 업로드\nGoogle Drive & Obsidian에\n자동 업로드",
+        "height": 224,
+        "width": 288,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2144,
+        -976
+      ],
+      "typeVersion": 1,
+      "id": "200e3ed6-6473-4f49-b058-72aeb63a99ab",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Slack 채널\n챗봇 메세지로 전송",
+        "height": 224,
+        "width": 192,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2448,
+        -736
+      ],
+      "typeVersion": 1,
+      "id": "3fb4a35c-a7db-4fb6-ae2c-571289c7d3fe",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n### AI Agent3\nAI Agent2 에서 수정한 내용을 Slack에서 가독성 좋게 형식 변환",
+        "height": 384,
+        "width": 288,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2144,
+        -736
+      ],
+      "typeVersion": 1,
+      "id": "4184f593-7076-4507-a96c-cc22e3cd0bab",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "### 텍스트 변환\n압축된 음성 파일을 텍스트로 변환",
+        "height": 256,
+        "width": 192,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        928,
+        -1056
+      ],
+      "typeVersion": 1,
+      "id": "40eca710-b7e8-451f-938f-e56c026cb7f8",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "### 파일 업로드\nGoogle Drive에 텍스트로 변환한 파일 업로드",
+        "height": 224,
+        "width": 288,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1488,
+        -1040
+      ],
+      "typeVersion": 1,
+      "id": "7a76f3dc-cf3a-45c4-b5b2-3fe0bb3b1d4c",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "notion-database-id-removed",
+          "mode": "list",
+          "cachedResultName": "회의록 요약",
+          "cachedResultUrl": "https://www.notion.so/notion-database-id-removed"
+        },
+        "title": "={{ $now.setZone('Asia/Seoul').toFormat('yyyy-MM-dd') }} 회의록",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "날짜|date",
+              "includeTime": false,
+              "date": "={{ $now.setZone('Asia/Seoul').toFormat('yyyy-MM-dd') }}"
+            },
+            {
+              "key": "담당자|multi_select",
+              "multiSelectValue": [
+                "회의 요약봇"
+              ]
+            },
+            {
+              "key": "문서분류|select",
+              "selectValue": "회의록"
+            }
+          ]
+        },
+        "blockUi": {
+          "blockValues": [
+            {
+              "textContent": "={{ $json.output }}"
+            }
+          ]
+        },
+        "options": {
+          "icon": "🤖"
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        2496,
+        -1264
+      ],
+      "id": "c5fc337e-d310-4e9a-b79a-809534ed939e",
+      "name": "Create a database page",
+      "credentials": {
+        "notionApi": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2192,
+        -1120
+      ],
+      "id": "27570cf1-4640-4833-9214-a6d09b3b4520",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "=당신은 'Notion 데이터베이스용 핵심 정보 추출 전문가'입니다.\n입력된 전체 회의록 마크다운 텍스트를 분석하여, *내용의 핵심과 구조를 최대한 유지*하며, 최종 출력 글자 수를 **공백 포함 1,800자 이하**로 줄이세요.\n\n[필수 추출 섹션]\n1.  3줄 핵심 요약 섹션\n2.  발언자별 핵심 발언 섹션\n3.  담당자별 액션 아이템 섹션 (체크박스 포맷 유지)\n\n[작업 지침]\n1. **발언 내용 제한**: '발언자별 핵심 발언' 섹션을 추출할 때, **각 참여자의 발언 내용은 최대 3문장 이내**로 요약하여 간결함을 유지해야 합니다.\n2.  **글자 수 제한**: 최종 출력의 전체 글자 수가 공백 포함 **1,800자를 넘지 않도록** 엄격하게 제한해야 합니다.\n3.  **구조 보존**: 추출한 섹션의 Markdown 형식은 최대한 그대로 유지하세요.\n4.  **불필요한 섹션 제거**: 위 [필수 추출 섹션] 외의 모든 내용(타임라인, 상세 논의 등)은 완전히 제외하고 출력하세요.\n\n[입력 데이터]\n{{ $json.output }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        2160,
+        -1264
+      ],
+      "id": "55085a1c-ff49-4ef2-93e9-d7f7c9d4d729",
+      "name": "AI Agent(Length Controller)"
+    },
+    {
+      "parameters": {
+        "content": "### AI Agent(Length Controller)\n앞서 요약한 내용",
+        "height": 368,
+        "width": 288,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2144,
+        -1360
+      ],
+      "typeVersion": 1,
+      "id": "7f685914-9c07-4cf8-8728-a0d124ebcf67",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "## Notion\n회의록 DB 페이지 생성 및 회의록 업로드",
+        "height": 240,
+        "width": 192,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2448,
+        -1360
+      ],
+      "typeVersion": 1,
+      "id": "7c30db44-5bf2-4294-b5a7-f7db4c231fb0",
+      "name": "Sticky Note3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive1": {
+      "main": [
+        [
+          {
+            "node": "CloudConvert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File3": {
+      "main": [
+        [
+          {
+            "node": "Upload file3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file3": {
+      "main": [
+        []
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent(Length Controller)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Convert to File3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent3": {
+      "main": [
+        [
+          {
+            "node": "Send a message (After7)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CloudConvert": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File1": {
+      "main": [
+        [
+          {
+            "node": "Upload file2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent(Length Controller)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent(Length Controller)": {
+      "main": [
+        [
+          {
+            "node": "Create a database page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "workflow-version-id-removed",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "instance-id-removed"
+  },
+  "id": "workflow-id-removed",
+  "tags": []
+}

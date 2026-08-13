@@ -1,0 +1,1016 @@
+{
+  "name": "03. 새 직원 온보딩 자동화",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyWeek",
+              "hour": 8
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "google-sheet-doc-id-removed",
+          "mode": "list",
+          "cachedResultName": "신규 직원",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/google-sheet-doc-id-removed/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "google-sheet-gid-removed",
+          "mode": "list",
+          "cachedResultName": "직원 데이터베이스",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/google-sheet-doc-id-removed/edit#gid=google-sheet-gid-removed"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "36de2e0c-b7b6-43a5-8b08-759b57d770cf",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "google-sheet-doc-id-removed",
+          "mode": "list",
+          "cachedResultName": "채용 프로세스 자동화",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/google-sheet-doc-id-removed/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "google-sheet-gid-removed",
+          "mode": "list",
+          "cachedResultName": "채용 결과",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/google-sheet-doc-id-removed/edit#gid=google-sheet-gid-removed"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "ID",
+              "lookupValue": "={{ $json.ID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        0
+      ],
+      "id": "7eb0d160-9cab-414a-bc07-b1f3234e9735",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json[\"이메일\"] }}",
+        "subject": "={{ $json[\"이름\"] }} 님, 입사를 진심으로 환영합니다! - {{ $json[\"이름\"] }} 님의 첫 출근 안내",
+        "emailType": "text",
+        "message": "={{ $json['이름'] }} 님께,\n\n안녕하세요. {{ $json['이름'] }} 님의 입사를 진심으로 환영합니다! 🎉\n\n{{ $json['이름'] }} 님을 [회사명]의 {{ $json['팀'] }}팀의 {{ $json['직무'] }}으로 모시게 되어 매우 기쁩니다. 앞으로 {{ $json['이름'] }} 님과 함께 만들어갈 멋진 성과와 여정을 기대합니다.\n\n---\n\n🌟 첫 출근 안내 상세 정보\n\n{{ $json['이름'] }} 님의 원활한 첫 출근을 위해 필요한 주요 정보를 아래와 같이 안내해 드립니다.\n\n1. 출근 일시 및 장소\n\n* 출근 날짜: {{ $json['입사일'] }}\n* 출근 시간: 09시\n* 출근 장소: [회사 주소]\n* 도착 시: 건물 [1층 안내데스크]에서 [인사팀 담당자 이름] 또는 '[회사명] 인사팀'으로 방문 등록 후 연락 주시면 됩니다.\n\n2. 준비 사항\n\n첫 출근일에 오시면 [노트북/출입증/사원증] 등이 준비되어 있을 예정입니다. 다만, 신분 확인 및 서류 작업을 위해 아래 서류를 지참해 주십시오.\n\n**필수 지참 서류:**\n    * 신분증 (운전면허증 또는 주민등록증)\n    * 통장 사본 (급여 이체용)\n    * 최종 학력 증명서 (원본 또는 사본)\n    * 경력 증명서 (경력직의 경우)\n\n3. 담당자 및 문의처\n\n당일 담당자: [인사팀 담당자 이름]\n연락처: [담당자 휴대폰 번호] 또는 [인사팀 직통 번호]\n\n{{ $json['이름'] }} 님의 첫 출근이 설레고 기분 좋은 시작이 될 수 있도록 저희 인사팀이 최선을 다해 준비하겠습니다.\n\n궁금한 점이 있으시면 언제든지 위의 연락처로 편하게 연락 주십시오. 곧 뵙겠습니다!\n\n감사합니다.\n\n- [회사명] 인사팀 드림",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        672,
+        -400
+      ],
+      "id": "83015c00-26c3-455d-9232-89a0a3a027e5",
+      "name": "Send a message",
+      "webhookId": "webhook-id-removed",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{ $json[\"입사일\"] }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        96
+      ],
+      "id": "8a1e8d5f-cb85-4625-8e93-e81e9434d128",
+      "name": "Wait",
+      "webhookId": "webhook-id-removed"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "slack-channel-id-removed",
+          "mode": "id"
+        },
+        "text": "=💌 안녕하세요!\n\n오늘 [회사명]에 합류하신 신규 입사자들을 소개해 드립니다.\n\n\n[신규 입사자 소개]\n{{\n$json.newHires.map(item =>\n  `🌱 ${item.팀} - ${item.이름} 님\\n\\n` +\n  `${item.이름} 님은 ${item.직무}로 입사하셨습니다. 앞으로 우수한 인재들을 모셔오기 위한 다양한 활동을 통해 [회사명]의 성장에 기여해주실 예정입니다.`\n).join('\\n')\n}}\n\n\n\n모두 함께 따뜻한 환영의 말씀 부탁드립니다! 🎉🎉🎉",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1360,
+        96
+      ],
+      "id": "aaa6118a-7193-4cca-9495-a79070aed441",
+      "name": "Send a message1",
+      "webhookId": "webhook-id-removed",
+      "credentials": {
+        "slackApi": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 30,
+        "unit": "days"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        912,
+        624
+      ],
+      "id": "368e213b-d349-4a5f-88d6-27101550a494",
+      "name": "Wait1",
+      "webhookId": "webhook-id-removed"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('If').item.json['이메일'] }}",
+        "subject": "={{ $('If').item.json['이름'] }} 님, [회사명] 입사 30일 차, 솔직한 온보딩 경험 피드백을 부탁드립니다.",
+        "emailType": "text",
+        "message": "={{ $('If').item.json['이름'] }} 님께,\n\n안녕하세요. [회사명] 인사팀입니다.\n\n{{ $('If').item.json['이름'] }} 님께서 저희 [회사명]에 합류하신 지 벌써 30일이 되었습니다. 짧지 않은 기간 동안 새로운 환경에 적응하고 업무를 익히시느라 수고 많으셨습니다.\n\n저희 팀은 신규 입사자들이 회사에 잘 정착하는 것이 가장 중요하다고 생각합니다. {{ $('If').item.json['이름'] }} 님의 솔직하고 건설적인 피드백은 앞으로 입사할 새로운 [회사명] 크루들에게 더 나은 온보딩 경험을 제공하는 데 큰 도움이 될 것입니다.\n\n---\n\n 🔍 온보딩 피드백 설문 요청\n\n아래 링크를 통해 {{ $('If').item.json['이름'] }} 님이 직접 경험하신 온보딩 과정에 대해 약 5분 정도 시간을 내어 피드백을 부탁드립니다.\n\n* 설문 참여 링크: notion-feedback-link-removed\n* 소요 시간: 약 5분\n* 피드백 항목 예시: 입사 전 안내, 첫 출근 경험, 팀 적응 지원, 필수 장비 지급, 온보딩 자료 유용성 등\n\n본 설문은 익명으로 참여하실 수 있으며, 데이터는 오직 온보딩 프로세스 개선 목적으로만 사용됩니다.\n\n{{ $('If').item.json['이름'] }} 님의 귀한 시간을 내어주셔서 다시 한번 감사드립니다. 앞으로도 [회사명]에서의 멋진 여정을 응원합니다!\n\n감사합니다.\n\n- [회사명] 인사팀 드림",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1120,
+        624
+      ],
+      "id": "d1ba9740-b5ab-4c54-bf9d-3cbf1ebd9dc3",
+      "name": "Send a message2",
+      "webhookId": "webhook-id-removed",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "google-sheet-doc-id-removed",
+          "mode": "list",
+          "cachedResultName": "신규 직원",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/google-sheet-doc-id-removed/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "google-sheet-gid-removed",
+          "mode": "list",
+          "cachedResultName": "직원 데이터베이스",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/google-sheet-doc-id-removed/edit#gid=google-sheet-gid-removed"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $('If').item.json.ID }}",
+            "이름": "={{ $('If').item.json['이름'] }}",
+            "이메일": "={{ $('If').item.json['이메일'] }}",
+            "전화번호": "={{ $('If').item.json['전화번호'] }}",
+            "팀": "={{ $('If').item.json['팀'] }}",
+            "직무": "={{ $('If').item.json['직무'] }}",
+            "입사일": "={{ $('If').item.json['입사일'] }}",
+            "온보딩 상태": "완료"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "이름",
+              "displayName": "이름",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "이메일",
+              "displayName": "이메일",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "전화번호",
+              "displayName": "전화번호",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "팀",
+              "displayName": "팀",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "직무",
+              "displayName": "직무",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "입사일",
+              "displayName": "입사일",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "온보딩 상태",
+              "displayName": "온보딩 상태",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1360,
+        624
+      ],
+      "id": "8e4848db-8794-4055-a492-1812bda740ee",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Trigger\nGoogle Sheets의 New Hires 시트에 새 행이 추가됨.",
+        "height": 272,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -64,
+        -112
+      ],
+      "typeVersion": 1,
+      "id": "a8e19bc1-43d0-49d0-b1fb-1f2b5759944c",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## 데이터 확보\n신규 직원의 이름, 이메일, 입사일, 부서, 멘토 정보를 가져옴.",
+        "height": 272,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        160,
+        -112
+      ],
+      "typeVersion": 1,
+      "id": "5050a471-8982-4bd7-b237-7b59504b44fd",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Wait Node\n입사일까지 대기.",
+        "height": 224,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        608,
+        16
+      ],
+      "typeVersion": 1,
+      "id": "9146aaa7-3124-4761-b9bb-90a7366c3f3b",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## 입사 환영\n개인화된 환영/안내 이메일 발송.",
+        "height": 224,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        608,
+        -480
+      ],
+      "typeVersion": 1,
+      "id": "01293bf6-44a5-4667-abcc-3e756b0439a4",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Notion DB 생성\nNotion 온보딩 데이터베이스에 온보딩 체크리스트 페이지 생성.",
+        "height": 240,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        608,
+        -240
+      ],
+      "typeVersion": 1,
+      "id": "c66ac4ab-72b1-4b29-b681-3201fb7a81c6",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## 팀 소개\n공용 채널에 신규 직원 소개 메시지 게시.",
+        "height": 240,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1296,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "6cdf2444-0aba-4a3f-832c-8627b43b514a",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Wait Node\n온보딩 기간 1개월(30일) 대기",
+        "height": 240,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        848,
+        528
+      ],
+      "typeVersion": 1,
+      "id": "00a212bd-2094-494c-a41c-f03e555a2da9",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## 후속 관리\n30일 대기 후 피드백 설문조사 이메일 발송.",
+        "height": 240,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1072,
+        528
+      ],
+      "typeVersion": 1,
+      "id": "2a7bfb26-36b7-4962-a6d8-69107826d66a",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## 최종 기록\nGoogle Sheets의 New Hires 시트 '온보딩 상태'를 [완료]로 업데이트.",
+        "height": 240,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1296,
+        528
+      ],
+      "typeVersion": 1,
+      "id": "4dbc9a8c-7240-4b03-a83c-fcf41c16af50",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "notion-database-id-removed",
+          "mode": "list",
+          "cachedResultName": "온보딩 체크리스트",
+          "cachedResultUrl": "https://www.notion.so/notion-database-id-removed"
+        },
+        "title": "={{ $json[\"이름\"] }} 님 온보딩 체크리스트",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "팀|multi_select",
+              "multiSelectValue": "={{ $json[\"팀\"] }}"
+            },
+            {
+              "key": "입사 날짜|date",
+              "includeTime": false,
+              "date": "={{ $json[\"입사일\"] }}"
+            },
+            {
+              "key": "이메일|email",
+              "emailValue": "={{ $json[\"이메일\"] }}"
+            }
+          ]
+        },
+        "blockUi": {
+          "blockValues": [
+            {
+              "type": "heading_3",
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "🧡[회사명] 크루가 된 00 님 진심으로 환영합니다🧡",
+                    "annotationUi": {
+                      "bold": true,
+                      "color": "orange_background"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "numbered_list_item",
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "업무에 필요한 업무 인수인계는 이 카드를 통해 진행됩니다!",
+                    "annotationUi": {}
+                  }
+                ]
+              }
+            },
+            {
+              "type": "numbered_list_item",
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "인수인계 완료 후, 독립적으로 진행할 수 있는 체크리스트는 00 님께서 완료로 처리해주시면 돼요!",
+                    "annotationUi": {}
+                  }
+                ]
+              }
+            },
+            {
+              "type": "numbered_list_item",
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "모든 항목이 완료되면, 이 카드는 완료된 일로 이동해주세요!",
+                    "annotationUi": {}
+                  }
+                ]
+              }
+            },
+            {
+              "type": "heading_3",
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "기본 세팅",
+                    "annotationUi": {
+                      "bold": true,
+                      "color": "gray_background"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "to_do",
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "기본 세팅(1)",
+                    "annotationUi": {}
+                  }
+                ]
+              }
+            },
+            {
+              "type": "heading_3",
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "슬랙",
+                    "annotationUi": {
+                      "bold": true,
+                      "color": "yellow_background"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "to_do",
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "슬랙 설정 (1)",
+                    "annotationUi": {}
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {
+          "icon": "👥"
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        -144
+      ],
+      "id": "5aee2b12-aaea-444a-a5d2-6371d8e02b60",
+      "name": "Create a database page",
+      "credentials": {
+        "notionApi": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "734de9c3-6797-4dc6-bac8-51fbb31f1460",
+              "leftValue": "={{ $json[\"온보딩 상태\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        0
+      ],
+      "id": "98e8d54a-cf91-4304-90f6-df7c2f0c26f7",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        912,
+        96
+      ],
+      "id": "1c62495c-4645-4757-96ab-263b1d516033",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 입력으로 들어온 데이터(Aggregate 노드의 출력)를 가져옵니다.\nconst incomingData = $input.item.json.data;\n\n// 최종적으로 Slack 메시지 생성을 위해 가공된 데이터를 저장할 배열입니다.\nconst processedData = [];\n\n// incomingData 배열을 순회하며 필요한 필드만 추출합니다.\nfor (const item of incomingData) {\n    processedData.push({\n        팀: item['팀'],\n        이름: item['이름'],\n        직무: item['직무']\n    });\n}\n\n// 다음 노드(Slack)로 전달할 때, 이 가공된 데이터를 하나의 아이템으로 묶어 전달합니다.\nreturn [{\n    json: {\n        newHires: processedData // \"newHires\"라는 새로운 키에 가공된 데이터 배열을 담습니다.\n    }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        96
+      ],
+      "id": "3a57e432-7273-4b60-b8bf-a62dccdd5d42",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "content": "## 데이터 통합\n개별 신규 입사자 항목을 하나의 묶음으로 통합",
+        "height": 240,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        848,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "9e390aa1-689d-46b3-8de2-0f77af3762d4",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## 데이터 정제\n이름, 팀, 직무 필드만을 추출",
+        "height": 240,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1072,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "bd65e559-0649-4b0c-90ba-64e906c0740f",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "google-sheet-doc-id-removed",
+          "mode": "list",
+          "cachedResultName": "신규 직원",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/google-sheet-doc-id-removed/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "google-sheet-gid-removed",
+          "mode": "list",
+          "cachedResultName": "직원 데이터베이스",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/google-sheet-doc-id-removed/edit#gid=google-sheet-gid-removed"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $json.ID }}",
+            "이메일": "={{ $json['이메일'] }}",
+            "전화번호": "={{ $json['전화번호'] }}",
+            "팀": "={{ $json['팀'] }}",
+            "직무": "={{ $json['직무'] }}",
+            "입사일": "={{ $json['입사일'] }}",
+            "온보딩 상태": "=진행중"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "이름",
+              "displayName": "이름",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "이메일",
+              "displayName": "이메일",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "전화번호",
+              "displayName": "전화번호",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "팀",
+              "displayName": "팀",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "직무",
+              "displayName": "직무",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "입사일",
+              "displayName": "입사일",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "온보딩 상태",
+              "displayName": "온보딩 상태",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        912,
+        368
+      ],
+      "id": "6a601fee-3d20-4270-97f5-15656049621b",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "credential-id-removed",
+          "name": "Credential Name Removed"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 중간 기록\nGoogle Sheets의 New Hires 시트 '온보딩 상태'를 [진행중]으로 업데이트.",
+        "height": 256,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        848,
+        256
+      ],
+      "typeVersion": 1,
+      "id": "3a4c326a-3e31-4dbb-8005-c61f8621950d",
+      "name": "Sticky Note11"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        []
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "Create a database page": {
+      "main": [
+        []
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create a database page",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "workflow-version-id-removed",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "instance-id-removed"
+  },
+  "id": "workflow-id-removed",
+  "tags": []
+}

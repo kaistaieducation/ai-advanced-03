@@ -34,5 +34,21 @@ uv가 처음이라면 `day01/uv_install.bat` 실행 후 위 명령을 수행하�
 
 ## n8n 실무 유즈케이스
 
-[day04/n8n_usercase.html](./day04/n8n_usercase.html)에서 전체 목록을 볼 수 있으며,
 각 유즈케이스 폴더의 README에 워크플로우 설명과 스크린샷이 있습니다.
+([day04/n8n_usercase.html](./day04/n8n_usercase.html)에서도 같은 목록을 볼 수 있습니다.)
+
+| # | 워크플로우 / Workflow | 주요 서비스 / Services | 링크 / Link |
+|---|-----------|------------|------|
+| 02 | 농수산물 시세 AI Agent | KAMIS API, Google Sheets | [바로가기](./day04/n8n_usecase/02-workflow-farm-data/) |
+| 03 | Slack 근태 관리 자동화 | Slack, Google Sheets | [바로가기](./day04/n8n_usecase/03-workflow-attendance/) |
+| 04 | 회의록 자동 요약 | 음성 인식, AI, Notion, Slack | [바로가기](./day04/n8n_usecase/04-workflow-meeting-assistant/) |
+| 05 | 이메일 자동 분류 및 일정 관리 | Gmail, Google Calendar, Google Sheets | [바로가기](./day04/n8n_usecase/05-workflow-email-data/) |
+| 06 | 예약 알림 시스템 | 웹앱, DB | [바로가기](./day04/n8n_usecase/06-workflow-reservation-system-data/) |
+| 07 | 서울 공공자전거 재고 관리 | 공공 API, KakaoTalk | [바로가기](./day04/n8n_usecase/07-workflow-inventory-bicycle/) |
+| 08 | 자동 가계부 | SMS, Google Sheets | [바로가기](./day04/n8n_usecase/08-workflow-automatic-account-book/) |
+| 09 | 지능형 파일 정리 | AI 분류, Google Drive, Google Sheets | [바로가기](./day04/n8n_usecase/09-workflow-file-organizer/) |
+| 10 | 주식 포트폴리오 리포트 | 주가 API, Gmail | [바로가기](./day04/n8n_usecase/10-workflow-Stock-Portfolio-Report-data/) |
+| 11 | OCR 문서 텍스트 추출 | Upstage OCR, Google Sheets | [바로가기](./day04/n8n_usecase/11-workflow-OCR/) |
+| 12 | 신규 직원 온보딩 자동화 | Gmail, Slack, DB | [바로가기](./day04/n8n_usecase/12-workflow-onboarding-system/) |
+| 13 | Google Sheets 버전 관리 및 복구 | Google Sheets, Slack | [바로가기](./day04/n8n_usecase/13-workflow-google-sheet-manager/) |
+| 14 | 날씨 기반 옷차림 추천 챗봇 | 날씨 API, AI Chat | [바로가기](./day04/n8n_usecase/14-workflow-AI-Outfit-Concierge-Chatbot/) |

@@ -26,6 +26,9 @@ env/
 # 테스트 · 실행 산출물
 .test_artifacts/
 
+# 객체 탐지 실습 이미지 (로컬에만 보관)
+day01/detect_img/
+
 # 검증 · 작업 리포트 (로컬 보관, 저장소에는 올리지 않음)
 day01_examples_Python3119_SmokeTest_보고서.md
 day01_examples_Python3119_installed_versions.txt
